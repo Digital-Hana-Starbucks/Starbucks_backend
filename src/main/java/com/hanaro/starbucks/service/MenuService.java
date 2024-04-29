@@ -30,4 +30,12 @@ public class MenuService {
         List<Menu> menus = menuRepository.findAllByCategory(category.get());
         return menus.stream().map(MenuResDto::new).collect(Collectors.toList());
     }
+    public MenuResDto getMenuByMenuIdx(int menuIdx) throws Exception{
+        Optional<Menu> optionalMenu = menuRepository.findById(menuIdx);
+        if(optionalMenu.isEmpty()) {
+            throw new Exception("존재하지 않는 메뉴입니다.");
+        }
+        Menu menu = optionalMenu.get();
+        return new MenuResDto(menu);
+    }
 }

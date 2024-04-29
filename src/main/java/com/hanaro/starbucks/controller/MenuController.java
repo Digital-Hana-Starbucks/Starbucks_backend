@@ -25,4 +25,9 @@ public class MenuController {
     public List<MenuResDto> getMenuListByCategoryIdx(@PathVariable int categoryIdx) throws Exception{
         return menuService.getMenuListByCategoryIdx(categoryIdx);
     }
+
+    @GetMapping("/{menuIdx}")
+    public MenuResDto getMenuByMenuIdx(@PathVariable int menuIdx) throws Exception{
+        return menuService.getMenuByMenuIdx(menuIdx);
+    }
 }
