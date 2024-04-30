@@ -1,10 +1,12 @@
 package com.hanaro.starbucks.entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Entity
+@Getter
 @Table(name = "user")
 public class User {
 
@@ -29,6 +31,6 @@ public class User {
     private int userPoint;
 
     @Column(name = "user_join_date")
-    private LocalDateTime userJoinDate;
+    private LocalDate userJoinDate;
 
 }
