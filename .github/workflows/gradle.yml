@@ -37,7 +37,10 @@ jobs:
         touch ./application-private.properties 
         echo "${{ secrets.properties }}" > ./application-private.properties # github actions에서 설정한 값을 application-private.properties 파일에 쓰기
       shell: bash
-
+      
+    - name: Grant execute permission to Gradle wrapper
+      run: chmod +x ./gradlew
+      
     - name: Build with Gradle Wrapper
       run: ./gradlew build
 
