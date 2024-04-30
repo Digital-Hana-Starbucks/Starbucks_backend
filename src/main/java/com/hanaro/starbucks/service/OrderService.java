@@ -4,6 +4,7 @@ import com.hanaro.starbucks.dto.orders.OrderEditReqDto;
 import com.hanaro.starbucks.dto.orders.OrderResDto;
 import com.hanaro.starbucks.entity.OrderDetail;
 import com.hanaro.starbucks.entity.Orders;
+import com.hanaro.starbucks.repository.OrderDetailRepository;
 import com.hanaro.starbucks.repository.OrderRepository;
 import com.hanaro.starbucks.util.Constant;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +18,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class OrderService {
     private final OrderRepository orderRepository;
+    private final OrderDetailRepository orderDetailRepository;
 
     public List<OrderResDto> getOrders() {
         List<Orders> orders = orderRepository.findAll();
@@ -54,7 +56,8 @@ public class OrderService {
     }
 
     public void deleteOrder(int orderIdx){
-        findOrderById(orderIdx);
+        Orders order = findOrderById(orderIdx);
+        order.getOrderDetails().forEach(orderDetailRepository::delete);
         orderRepository.deleteById(orderIdx);
     }
     private Orders findOrderById(int orderIdx) {
