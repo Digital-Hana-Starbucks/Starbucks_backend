@@ -33,7 +33,6 @@ jobs:
 
     - name: make application-private.properties
       run: |
-        mkdir ./src/main/resources
         cd ./src/main/resources 
         touch ./application-private.properties 
         echo "${{ secrets.properties }}" > ./application-private.properties # github actions에서 설정한 값을 application-private.properties 파일에 쓰기
