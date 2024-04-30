@@ -37,11 +37,7 @@ public class OrderService {
     }
 
     public OrderResDto getOrder(int orderIdx) {
-        Optional<Orders> optionalOrders = orderRepository.findById(orderIdx);
-        if(optionalOrders.isEmpty()){
-            throw new IllegalArgumentException("주문 내역이 존재하지 않습니다.");
-        }
-        Orders order = optionalOrders.get();
+        Orders order = findOrderById(orderIdx);
         return OrderResDto.builder()
                 .orderIdx(order.getOrderIdx())
                 .orderId(order.getOrderId())
@@ -52,21 +48,18 @@ public class OrderService {
     }
 
     public void updateOrder(int orderIdx, OrderEditReqDto orderEditReqDto) {
-        Optional<Orders> optionalOrders = orderRepository.findById(orderIdx);
-        if(optionalOrders.isEmpty()){
-            throw new IllegalArgumentException("주문 내역이 존재하지 않습니다.");
-        }
-        Orders order = optionalOrders.get();
+        Orders order = findOrderById(orderIdx);
         order.updateOrderStatus(orderEditReqDto.getOrderStatus());
         orderRepository.save(order);
     }
 
     public void deleteOrder(int orderIdx){
-        Optional<Orders> optionalOrders = orderRepository.findById(orderIdx);
-        if(optionalOrders.isEmpty()){
-            throw new IllegalArgumentException("주문 내역이 존재하지 않습니다.");
-        }
+        findOrderById(orderIdx);
         orderRepository.deleteById(orderIdx);
+    }
+    private Orders findOrderById(int orderIdx) {
+        Optional<Orders> optionalOrders = orderRepository.findById(orderIdx);
+        return optionalOrders.orElseThrow(() -> new IllegalArgumentException("주문 내역이 존재하지 않습니다."));
     }
 
     private int calculateTotalPrice(List<OrderDetail> orderDetails) {
