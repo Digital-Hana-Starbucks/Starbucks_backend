@@ -1,10 +1,13 @@
 package com.hanaro.starbucks.entity;
 
+import com.hanaro.starbucks.dto.menu.MenuReqDto;
 import jakarta.persistence.*;
+import lombok.Getter;
+import java.time.LocalDate;
 
-import java.time.LocalDateTime;
 
 @Entity
+@Getter
 @Table(name = "menu")
 public class Menu {
 
@@ -26,9 +29,18 @@ public class Menu {
     private String menuImage;
 
     @Column(name = "menu_date")
-    private LocalDateTime menuDate;
+    private LocalDate menuDate;
 
     @ManyToOne
     @JoinColumn(name = "category_idx")
     private Category category;
+
+
+    public void update(MenuReqDto dto, String img) {
+        this.menuName = dto.getMenuName();
+        this.menuPrice = dto.getMenuPrice();
+        this.menuImage = img;
+        this.menuDate = LocalDate.now();
+    }
+
 }
