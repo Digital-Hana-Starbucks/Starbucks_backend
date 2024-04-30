@@ -28,4 +28,9 @@ public class OrderController {
         orderService.updateOrder(orderIdx, orderEditReqDto);
     }
 
+    @DeleteMapping("/{orderIdx}")
+    public void deleteOrder(@PathVariable int orderIdx) {
+        orderService.deleteOrder(orderIdx);
+    }
+
 }

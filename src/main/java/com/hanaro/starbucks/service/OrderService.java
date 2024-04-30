@@ -61,6 +61,14 @@ public class OrderService {
         orderRepository.save(order);
     }
 
+    public void deleteOrder(int orderIdx){
+        Optional<Orders> optionalOrders = orderRepository.findById(orderIdx);
+        if(optionalOrders.isEmpty()){
+            throw new IllegalArgumentException("주문 내역이 존재하지 않습니다.");
+        }
+        orderRepository.deleteById(orderIdx);
+    }
+
     private int calculateTotalPrice(List<OrderDetail> orderDetails) {
         int totalPrice = 0;
         for (OrderDetail orderDetail : orderDetails) {
