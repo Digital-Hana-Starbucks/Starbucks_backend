@@ -3,10 +3,7 @@ package com.hanaro.starbucks.controller;
 import com.hanaro.starbucks.dto.menu.MenuResDto;
 import com.hanaro.starbucks.service.MenuService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -29,5 +26,10 @@ public class MenuController {
     @GetMapping("/{menuIdx}")
     public MenuResDto getMenuByMenuIdx(@PathVariable int menuIdx) throws Exception{
         return menuService.getMenuByMenuIdx(menuIdx);
+    }
+
+    @DeleteMapping("/{menuIdx}")
+    public void deleteMenuByMenuIdx(@PathVariable int menuIdx) throws Exception{
+        menuService.deleteMenuByMenuIdx(menuIdx);
     }
 }
