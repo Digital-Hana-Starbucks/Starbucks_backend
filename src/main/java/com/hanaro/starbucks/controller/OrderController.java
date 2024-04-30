@@ -4,6 +4,7 @@ import com.hanaro.starbucks.dto.orders.OrderResDto;
 import com.hanaro.starbucks.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,6 +20,9 @@ public class OrderController {
     public List<OrderResDto> getOrders() {
         return orderService.getOrders();
     }
-
+    @GetMapping("/{orderIdx}")
+    public OrderResDto getOrder(@PathVariable int orderIdx) {
+        return orderService.getOrder(orderIdx);
+    }
 
 }

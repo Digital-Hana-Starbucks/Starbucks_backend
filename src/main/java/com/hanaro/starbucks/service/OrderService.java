@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -32,6 +33,21 @@ public class OrderService {
                 })
                 .collect(Collectors.toList());
         return orderResDtos;
+    }
+
+    public OrderResDto getOrder(int orderIdx) {
+        Optional<Orders> optionalOrders = orderRepository.findById(orderIdx);
+        if(optionalOrders.isEmpty()){
+            throw new IllegalArgumentException("주문 내역이 존재하지 않습니다.");
+        }
+        Orders order = optionalOrders.get();
+        return OrderResDto.builder()
+                .orderIdx(order.getOrderIdx())
+                .orderId(order.getOrderId())
+                .totalPrice(calculateTotalPrice(order.getOrderDetails()))
+                .orderStatus(order.getOrderStatus())
+                .orderDate(order.getOrderDate())
+                .build();
     }
 
     private int calculateTotalPrice(List<OrderDetail> orderDetails) {
