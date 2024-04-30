@@ -31,4 +31,8 @@ public class Orders {
 
     @OneToMany(mappedBy = "orders", cascade = CascadeType.ALL)
     private List<OrderDetail> orderDetails;
+
+    public void updateOrderStatus(String orderStatus){
+        this.orderStatus=orderStatus;
+    }
 }

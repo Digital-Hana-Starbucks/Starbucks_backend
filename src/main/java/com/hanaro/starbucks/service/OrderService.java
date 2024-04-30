@@ -1,5 +1,6 @@
 package com.hanaro.starbucks.service;
 
+import com.hanaro.starbucks.dto.orders.OrderEditReqDto;
 import com.hanaro.starbucks.dto.orders.OrderResDto;
 import com.hanaro.starbucks.entity.OrderDetail;
 import com.hanaro.starbucks.entity.Orders;
@@ -48,6 +49,16 @@ public class OrderService {
                 .orderStatus(order.getOrderStatus())
                 .orderDate(order.getOrderDate())
                 .build();
+    }
+
+    public void updateOrder(int orderIdx, OrderEditReqDto orderEditReqDto) {
+        Optional<Orders> optionalOrders = orderRepository.findById(orderIdx);
+        if(optionalOrders.isEmpty()){
+            throw new IllegalArgumentException("주문 내역이 존재하지 않습니다.");
+        }
+        Orders order = optionalOrders.get();
+        order.updateOrderStatus(orderEditReqDto.getOrderStatus());
+        orderRepository.save(order);
     }
 
     private int calculateTotalPrice(List<OrderDetail> orderDetails) {

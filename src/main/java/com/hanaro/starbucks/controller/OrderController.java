@@ -1,12 +1,10 @@
 package com.hanaro.starbucks.controller;
 
+import com.hanaro.starbucks.dto.orders.OrderEditReqDto;
 import com.hanaro.starbucks.dto.orders.OrderResDto;
 import com.hanaro.starbucks.service.OrderService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -23,6 +21,11 @@ public class OrderController {
     @GetMapping("/{orderIdx}")
     public OrderResDto getOrder(@PathVariable int orderIdx) {
         return orderService.getOrder(orderIdx);
+    }
+
+    @PutMapping("/{orderIdx}")
+    public void updateOrder(@PathVariable int orderIdx, @RequestBody OrderEditReqDto orderEditReqDto) {
+        orderService.updateOrder(orderIdx, orderEditReqDto);
     }
 
 }
