@@ -1,11 +1,13 @@
 package com.hanaro.starbucks.entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 
 @Entity
+@Getter
 @Table(name = "orders")
 public class Orders {
 
@@ -21,7 +23,7 @@ public class Orders {
     private String orderStatus;
 
     @Column(name = "order_date")
-    private LocalDateTime orderDate;
+    private LocalDate orderDate;
 
     @ManyToOne
     @JoinColumn(name = "user_idx")
