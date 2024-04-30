@@ -1,9 +1,11 @@
 package com.hanaro.starbucks.entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
 import org.hibernate.annotations.ColumnDefault;
 
 @Entity
+@Getter
 @Table(name = "order_detail")
 public class OrderDetail {
 
