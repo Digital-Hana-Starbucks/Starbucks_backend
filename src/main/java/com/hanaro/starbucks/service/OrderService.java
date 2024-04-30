@@ -3,13 +3,11 @@ package com.hanaro.starbucks.service;
 import com.hanaro.starbucks.dto.orders.OrderResDto;
 import com.hanaro.starbucks.entity.OrderDetail;
 import com.hanaro.starbucks.entity.Orders;
-import com.hanaro.starbucks.repository.OrderDetailRepository;
 import com.hanaro.starbucks.repository.OrderRepository;
 import com.hanaro.starbucks.util.Constant;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -17,13 +15,12 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class OrderService {
     private final OrderRepository orderRepository;
-    private final OrderDetailRepository orderDetailRepository;
 
     public List<OrderResDto> getOrders() {
         List<Orders> orders = orderRepository.findAll();
         List<OrderResDto> orderResDtos = orders.stream()
                 .map(order -> {
-                    List<OrderDetail> orderDetails = orderDetailRepository.findAllByOrders(order);
+                    List<OrderDetail> orderDetails = order.getOrderDetails();
                     int totalPrice = calculateTotalPrice(orderDetails);
                     return OrderResDto.builder()
                             .orderIdx(order.getOrderIdx())
