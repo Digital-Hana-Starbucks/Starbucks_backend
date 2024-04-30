@@ -4,9 +4,8 @@ import com.hanaro.starbucks.entity.Menu;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Getter
 @NoArgsConstructor
@@ -21,7 +20,7 @@ public class MenuResDto {
 
     private String menuImage;
 
-    private LocalDateTime menuDate;
+    private LocalDate menuDate;
 
     private int category_idx;
 
