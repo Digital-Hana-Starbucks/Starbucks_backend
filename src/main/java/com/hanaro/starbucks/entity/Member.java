@@ -1,5 +1,6 @@
 package com.hanaro.starbucks.entity;
 
+import com.hanaro.starbucks.dto.user.MemberResDto;
 import jakarta.persistence.*;
 import lombok.Getter;
 
@@ -8,7 +9,7 @@ import java.time.LocalDate;
 @Entity
 @Getter
 @Table(name = "user")
-public class User {
+public class Member {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,5 +33,4 @@ public class User {
 
     @Column(name = "user_join_date")
     private LocalDate userJoinDate;
-
 }

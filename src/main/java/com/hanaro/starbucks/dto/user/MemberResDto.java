@@ -1,12 +1,15 @@
 package com.hanaro.starbucks.dto.user;
 
-import com.hanaro.starbucks.entity.User;
+import com.hanaro.starbucks.entity.Member;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
 @Getter
-public class UserResDto {
+@NoArgsConstructor
+public class MemberResDto {
     private int userIdx;
 
     private String userId;
@@ -21,7 +24,7 @@ public class UserResDto {
 
     private LocalDate userJoinDate;
 
-    public UserResDto(User user){
+    public MemberResDto(Member user){
         this.userIdx = user.getUserIdx();
         this.userId = user.getUserId();
         this.userPw = user.getUserPw();

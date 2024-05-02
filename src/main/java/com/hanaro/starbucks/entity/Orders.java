@@ -25,7 +25,7 @@ public class Orders {
 
     @ManyToOne
     @JoinColumn(name = "user_idx")
-    private User user;
+    private Member user;
 
     @OneToMany(mappedBy = "orders", cascade = CascadeType.ALL)
     private List<OrderDetail> orderDetails;
