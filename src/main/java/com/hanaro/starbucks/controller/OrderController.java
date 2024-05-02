@@ -8,9 +8,11 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import static com.hanaro.starbucks.util.APIConstant.API_VERSION;
+
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/orders")
+@RequestMapping(API_VERSION + "/orders")
 public class OrderController {
     private final OrderService orderService;
 
@@ -23,12 +25,12 @@ public class OrderController {
         return orderService.getOrder(orderIdx);
     }
 
-    @PutMapping("/{orderIdx}")
+    @PutMapping("/admin/{orderIdx}")
     public void updateOrder(@PathVariable int orderIdx, @RequestBody OrderEditReqDto orderEditReqDto) {
         orderService.updateOrder(orderIdx, orderEditReqDto);
     }
 
-    @DeleteMapping("/{orderIdx}")
+    @DeleteMapping("/admin/{orderIdx}")
     public void deleteOrder(@PathVariable int orderIdx) {
         orderService.deleteOrder(orderIdx);
     }
