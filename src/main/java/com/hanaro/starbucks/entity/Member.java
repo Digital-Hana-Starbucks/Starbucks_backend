@@ -1,5 +1,6 @@
 package com.hanaro.starbucks.entity;
 
+import com.hanaro.starbucks.dto.member.MemberUpdateReqDto;
 import jakarta.persistence.*;
 import lombok.Getter;
 
@@ -32,4 +33,13 @@ public class Member {
 
     @Column(name = "user_join_date")
     private LocalDate userJoinDate;
+
+    public void update(MemberUpdateReqDto dto) {
+        this.userId = dto.getUserId();
+        this.userNickname=dto.getUserNickname();
+        this.userPw = dto.getUserPw();
+        this.userRole = dto.getUserRole();
+        this.userPoint = dto.getUserPoint();
+        this.userJoinDate = LocalDate.now();
+    }
 }

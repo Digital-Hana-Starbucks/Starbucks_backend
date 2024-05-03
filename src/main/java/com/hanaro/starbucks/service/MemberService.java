@@ -1,6 +1,7 @@
 package com.hanaro.starbucks.service;
 
 import com.hanaro.starbucks.dto.member.MemberResDto;
+import com.hanaro.starbucks.dto.member.MemberUpdateReqDto;
 import com.hanaro.starbucks.entity.Member;
 import com.hanaro.starbucks.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -32,6 +33,16 @@ public class MemberService {
         Optional<Member> optional = userRepository.findByUserIdAndUserPw(userId, userPw);
 
         return optional.map(MemberResDto::new).orElseGet(MemberResDto::new);
+    }
+
+    public void updateUser(int userIdx, MemberUpdateReqDto user){
+        Optional<Member> optional = userRepository.findById(userIdx);
+        if(optional.isEmpty()){
+            throw new IllegalArgumentException("존재하지 않는 회원입니다.");
+        }
+        Member member = optional.get();
+        member.update(user);
+        userRepository.save(member);
     }
 
     public void deleteUser(int userIdx){

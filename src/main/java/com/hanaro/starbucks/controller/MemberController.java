@@ -3,6 +3,7 @@ package com.hanaro.starbucks.controller;
 import com.hanaro.starbucks.config.JwtUtil;
 import com.hanaro.starbucks.dto.member.LoginReqDto;
 import com.hanaro.starbucks.dto.member.MemberResDto;
+import com.hanaro.starbucks.dto.member.MemberUpdateReqDto;
 import com.hanaro.starbucks.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -31,6 +32,11 @@ public class MemberController {
         MemberResDto findUser = userService.findUser(user.getUserId(), user.getUserPw());
 
         return jwtUtil.createToken(findUser.getUserId(), Arrays.asList(findUser.getUserRole()));
+    }
+
+    @PutMapping("/admin/{userIdx}")
+    public void updateUser(@PathVariable int userIdx, @RequestBody MemberUpdateReqDto user){
+        userService.updateUser(userIdx, user);
     }
 
     @DeleteMapping("/admin/{userIdx}")
