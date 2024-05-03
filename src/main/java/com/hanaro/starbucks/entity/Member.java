@@ -1,6 +1,5 @@
 package com.hanaro.starbucks.entity;
 
-import com.hanaro.starbucks.dto.user.MemberResDto;
 import jakarta.persistence.*;
 import lombok.Getter;
 

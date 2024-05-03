@@ -1,7 +1,6 @@
-package com.hanaro.starbucks.dto.user;
+package com.hanaro.starbucks.dto.member;
 
 import com.hanaro.starbucks.entity.Member;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
