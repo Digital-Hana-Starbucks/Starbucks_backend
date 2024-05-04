@@ -11,5 +11,5 @@ public class MenuReqDto {
     private int menuPrice;
 
 
-    private int category_idx;
+    private int categoryIdx;
 }

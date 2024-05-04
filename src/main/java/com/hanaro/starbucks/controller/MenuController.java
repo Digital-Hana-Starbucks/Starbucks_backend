@@ -40,7 +40,7 @@ public class MenuController {
     }
 
     @PutMapping(value = "/admin/{menuIdx}", consumes = {MediaType.APPLICATION_JSON_VALUE, "multipart/form-data"})
-    public void updateMenu(@PathVariable int menuIdx, @RequestPart(value = "dto") MenuReqDto menuReqDto, @RequestPart(value = "menuImg") MultipartFile img) throws Exception{
+    public void updateMenu(@PathVariable int menuIdx, @RequestPart(value = "dto") MenuReqDto menuReqDto, @RequestPart(value = "menuImg", required = false) MultipartFile img) throws Exception{
         menuService.updateMenu(menuIdx, menuReqDto, img);
     }
 }

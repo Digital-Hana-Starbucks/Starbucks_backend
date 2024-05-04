@@ -60,15 +60,16 @@ public class MenuService {
             throw new Exception("존재하지 않는 메뉴입니다.");
         }
         Menu menu = optionalMenu.get();
-        Optional<Category> optionalCategory = categoryRepository.findById(menuReqDto.getCategory_idx());
+        Optional<Category> optionalCategory = categoryRepository.findById(menuReqDto.getCategoryIdx());
         if (optionalCategory.isEmpty()) {
-            throw new Exception("존재하지 않는 카테고리입니다.");
+            throw new Exception("존재하지 않는 카테고리입니다."+ menuReqDto.getCategoryIdx());
         }
-        log.info("메뉴 검색 완");
-        String url = s3Uploader.updateFile(img, menu.getMenuImage(), optionalCategory.get().getCategoryName());
-        log.info(url);
+        String url;
+
+        if(img==null || img.isEmpty()) url=menu.getMenuImage();
+        else url = s3Uploader.updateFile(img, menu.getMenuImage(), optionalCategory.get().getCategoryName());
+
         menu.update(menuReqDto, url);
-        log.info("업데이트 완");
         menuRepository.save(menu);
     }
 }
