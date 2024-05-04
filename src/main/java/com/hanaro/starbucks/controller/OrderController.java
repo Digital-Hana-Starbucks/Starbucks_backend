@@ -13,6 +13,7 @@ import static com.hanaro.starbucks.util.APIConstant.API_VERSION;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(API_VERSION + "/orders")
+@CrossOrigin("http://localhost:5173")
 public class OrderController {
     private final OrderService orderService;
 

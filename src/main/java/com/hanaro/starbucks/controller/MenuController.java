@@ -15,6 +15,7 @@ import static com.hanaro.starbucks.util.APIConstant.API_VERSION;
 @RestController
 @RequestMapping(API_VERSION + "/products")
 @RequiredArgsConstructor
+@CrossOrigin("http://localhost:5173")
 public class MenuController {
     private final MenuService menuService;
 
