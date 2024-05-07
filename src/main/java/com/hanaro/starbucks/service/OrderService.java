@@ -27,6 +27,7 @@ public class OrderService {
                     List<OrderDetail> orderDetails = order.getOrderDetails();
                     int totalPrice = calculateTotalPrice(orderDetails);
                     return OrderResDto.builder()
+                            .userIdx(order.getUser().getUserIdx())
                             .orderIdx(order.getOrderIdx())
                             .orderId(order.getOrderId())
                             .totalPrice(totalPrice)
@@ -41,6 +42,7 @@ public class OrderService {
     public OrderResDto getOrder(int orderIdx) {
         Orders order = findOrderById(orderIdx);
         return OrderResDto.builder()
+                .userIdx(order.getUser().getUserIdx())
                 .orderIdx(order.getOrderIdx())
                 .orderId(order.getOrderId())
                 .totalPrice(calculateTotalPrice(order.getOrderDetails()))
