@@ -2,12 +2,15 @@ package com.hanaro.starbucks.entity;
 
 import com.hanaro.starbucks.dto.member.MemberUpdateReqDto;
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
 @Entity
 @Getter
+@NoArgsConstructor
 @Table(name = "user")
 public class Member {
 
@@ -33,6 +36,15 @@ public class Member {
 
     @Column(name = "user_join_date")
     private LocalDate userJoinDate;
+
+    @Builder
+    public Member(String userId, String userPw, String userNickname) {
+        this.userId = userId;
+        this.userPw = userPw;
+        this.userNickname = userNickname;
+        this.userRole = "USER";
+        this.userPoint = 0;
+    }
 
     public void update(MemberUpdateReqDto dto) {
         this.userId = dto.getUserId();

@@ -3,9 +3,12 @@ package com.hanaro.starbucks.controller;
 import com.hanaro.starbucks.config.JwtUtil;
 import com.hanaro.starbucks.dto.member.LoginReqDto;
 import com.hanaro.starbucks.dto.member.MemberResDto;
+import com.hanaro.starbucks.dto.member.SignupReqDto;
 import com.hanaro.starbucks.dto.member.MemberUpdateReqDto;
 import com.hanaro.starbucks.service.MemberService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
@@ -15,33 +18,51 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/users")
 public class MemberController {
-    private final MemberService userService;
+    private final MemberService memberService;
     private final JwtUtil jwtUtil;
 
     @GetMapping("")
     public List<MemberResDto> getUsers(){
-        return userService.getUsers();
+        return memberService.getUsers();
     }
     @GetMapping("/{userIdx}")
     public MemberResDto getUser(@PathVariable int userIdx){
-        return userService.getUser(userIdx);
+        return memberService.getUser(userIdx);
+    }
+
+    @PostMapping("/signup")
+    @ResponseBody
+    public ResponseEntity<?> signup(@RequestBody SignupReqDto user) {
+        System.out.println(user);
+        boolean findUser = memberService.findUserByUserId(user.getUserId());
+        System.out.println(findUser);
+        if (!findUser) {
+            MemberResDto newUser = memberService.createUser(user);
+            return ResponseEntity.ok(newUser.getUserId());
+        }
+        return ResponseEntity.status(HttpStatus.CONFLICT).body("이미 존재하는 사용자입니다.");
     }
 
     @PostMapping("/login")
-    public String login(@RequestParam LoginReqDto user)  {
-        MemberResDto findUser = userService.findUser(user.getUserId(), user.getUserPw());
-
-        return jwtUtil.createToken(findUser.getUserId(), Arrays.asList(findUser.getUserRole()));
+    @ResponseBody
+    public ResponseEntity<?> login(@RequestBody LoginReqDto user)  {
+        MemberResDto findUser = memberService.findUserByUserIdAndUserPw(user.getUserId(), user.getUserPw());
+        if (findUser != null) {
+            String token = jwtUtil.createToken(findUser.getUserId(), Arrays.asList(findUser.getUserRole()));
+            return ResponseEntity.ok(token);
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인에 실패하였습니다. 아이디와 비밀번호를 확인해주세요.");
+        }
     }
 
     @PutMapping("/admin/{userIdx}")
     public void updateUser(@PathVariable int userIdx, @RequestBody MemberUpdateReqDto user){
-        userService.updateUser(userIdx, user);
+        memberService.updateUser(userIdx, user);
     }
 
     @DeleteMapping("/admin/{userIdx}")
     public void deleteUser(@PathVariable int userIdx){
-        userService.deleteUser(userIdx);
+        memberService.deleteUser(userIdx);
     }
 
 }
