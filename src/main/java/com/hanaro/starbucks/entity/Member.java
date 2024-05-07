@@ -1,13 +1,12 @@
 package com.hanaro.starbucks.entity;
 
+import com.hanaro.starbucks.dto.member.MemberUpdateReqDto;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.cglib.core.Local;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 @Entity
 @Getter
@@ -45,6 +44,14 @@ public class Member {
         this.userNickname = userNickname;
         this.userRole = "USER";
         this.userPoint = 0;
+    }
+
+    public void update(MemberUpdateReqDto dto) {
+        this.userId = dto.getUserId();
+        this.userNickname=dto.getUserNickname();
+        this.userPw = dto.getUserPw();
+        this.userRole = dto.getUserRole();
+        this.userPoint = dto.getUserPoint();
         this.userJoinDate = LocalDate.now();
     }
 }

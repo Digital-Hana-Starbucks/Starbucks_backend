@@ -2,6 +2,7 @@ package com.hanaro.starbucks.service;
 
 import com.hanaro.starbucks.dto.member.MemberResDto;
 import com.hanaro.starbucks.dto.member.SignupReqDto;
+import com.hanaro.starbucks.dto.member.MemberUpdateReqDto;
 import com.hanaro.starbucks.entity.Member;
 import com.hanaro.starbucks.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +24,16 @@ public class MemberService {
     @Transactional
     public List<MemberResDto> getUsers(){
         return memberRepository.findAll().stream().map(MemberResDto::new).collect(Collectors.toList());
+    }
+
+    @Transactional
+    public MemberResDto getUser(int idx){
+
+        Optional<Member> optionalMember = memberRepository.findById(idx);
+        if(optionalMember.isEmpty()){
+            throw new IllegalArgumentException("존재하지 않는 회원입니다.");
+        }
+        return new MemberResDto(optionalMember.get());
     }
 
     @Transactional
@@ -57,4 +68,17 @@ public class MemberService {
         }
     }
 
+    public void updateUser(int userIdx, MemberUpdateReqDto user){
+        Optional<Member> optional = memberRepository.findById(userIdx);
+        if(optional.isEmpty()){
+            throw new IllegalArgumentException("존재하지 않는 회원입니다.");
+        }
+        Member member = optional.get();
+        member.update(user);
+        memberRepository.save(member);
+    }
+
+    public void deleteUser(int userIdx){
+        memberRepository.deleteById(userIdx);
+    }
 }

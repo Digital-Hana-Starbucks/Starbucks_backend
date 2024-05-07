@@ -27,17 +27,17 @@ public class SecurityConfig {
                 .csrf((auth) -> auth.disable())
                 .cors((cors) -> cors.configurationSource(corsConfigurationSource()))
 
-                .authorizeHttpRequests((auth) -> auth
-                        // 로그인과 회원가입은 모든 사용자에게 허용한다.
-                        .requestMatchers(
-                                new AntPathRequestMatcher("/login"),
-                                new AntPathRequestMatcher("/signup")
-                        ).permitAll() // 권한이 있든 말든 모두 접근 가능
-                        // admin일 경우에만 /admin에 대한 요청에서 접근을 허용한다.
-                        .requestMatchers("/admin").hasRole("ADMIN")
-                        // 그 외 모든 요청은 인증된 사용자에게만 허용한다.
-                        .anyRequest().authenticated()
-                )
+//                .authorizeHttpRequests((auth) -> auth
+//                        // 로그인과 회원가입은 모든 사용자에게 허용한다.
+//                        .requestMatchers(
+//                                new AntPathRequestMatcher("/login"),
+//                                new AntPathRequestMatcher("/signup")
+//                        ).permitAll() // 권한이 있든 말든 모두 접근 가능
+//                        // admin일 경우에만 /admin에 대한 요청에서 접근을 허용한다.
+//                        .requestMatchers("/admin").hasRole("ADMIN")
+//                        // 그 외 모든 요청은 인증된 사용자에게만 허용한다.
+//                        .anyRequest().authenticated()
+//                )
 //                .formLogin((formLogin) -> formLogin
 //                        .loginProcessingUrl("/login")
 //                        .successHandler(((request, response, authentication) -> {
@@ -47,9 +47,9 @@ public class SecurityConfig {
 //                        .permitAll()
 //                );
 
-//                .authorizeHttpRequests( (auth) -> auth
-//                        .requestMatchers( new AntPathRequestMatcher("/**") )
-//                        .permitAll())
+                .authorizeHttpRequests( (auth) -> auth
+                        .requestMatchers( new AntPathRequestMatcher("/**") )
+                        .permitAll())
 
                 .sessionManagement(sessionManagement ->
                         sessionManagement.sessionCreationPolicy(
