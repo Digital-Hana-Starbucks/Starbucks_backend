@@ -31,7 +31,7 @@ public class JwtUtil {
 
     @PostConstruct
     protected void init() {
-        secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes());
+        secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes()); // secret key 암호화
     }
 
     public String createToken(String userId, List<String> roleList) {
@@ -51,9 +51,10 @@ public class JwtUtil {
         UserDetails userDetails = userDetailsService.loadUserByUsername(userId);
         return new UsernamePasswordAuthenticationToken(
                 userDetails, "", userDetails.getAuthorities()
-        );
+        ); // 사용자 정보를 기반으로 토큰 생성
     }
 
+    // http 요청에서 "X-AUTH-TOKEN" 헤더 값을 읽어오는 메소드
     public String resolveToken(HttpServletRequest request) {
         return request.getHeader("X-AUTH-TOKEN");
     }
