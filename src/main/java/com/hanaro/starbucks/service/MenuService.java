@@ -12,8 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -72,5 +71,21 @@ public class MenuService {
 
         menu.update(menuReqDto, url);
         menuRepository.save(menu);
+    }
+
+    public List<MenuResDto> getRecommendationList(){
+        List<Menu> menus = menuRepository.findAll();
+
+        Set<Integer> idxSet = new HashSet<>(9);
+        List<Menu> menuList = new ArrayList<>(9);
+
+        Random random = new Random();
+
+        while (idxSet.size() < 9) {
+            int idx = random.nextInt(menus.size());
+            idxSet.add(idx);
+            menuList.add(menus.get(idx));
+        }
+        return menuList.stream().map(MenuResDto::new).collect(Collectors.toList());
     }
 }

@@ -51,4 +51,7 @@ public class MenuController {
     public List<CategoryResDto> getCategoryList() {
         return categoryService.getCategoryList();
     }
+
+    @GetMapping("/recommendations")
+    public List<MenuResDto> getRecommendationList() { return menuService.getRecommendationList(); }
 }
