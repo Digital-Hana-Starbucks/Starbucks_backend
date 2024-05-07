@@ -1,4 +1,4 @@
-package com.hanaro.starbucks.dto.user;
+package com.hanaro.starbucks.dto.member;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;

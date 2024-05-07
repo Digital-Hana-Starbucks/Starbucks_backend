@@ -38,12 +38,6 @@ public class SecurityConfig {
                         // 그 외 모든 요청은 인증된 사용자에게만 허용한다.
                         .anyRequest().authenticated()
                 )
-                .sessionManagement(sessionManagement ->
-                        sessionManagement.sessionCreationPolicy(
-                                SessionCreationPolicy.STATELESS
-                        ))
-                .addFilterBefore(new JwtAuthenticationFilter(jwtConfig),
-                UsernamePasswordAuthenticationFilter.class);
 //                .formLogin((formLogin) -> formLogin
 //                        .loginProcessingUrl("/login")
 //                        .successHandler(((request, response, authentication) -> {
@@ -52,6 +46,18 @@ public class SecurityConfig {
 //                        }))
 //                        .permitAll()
 //                );
+
+//                .authorizeHttpRequests( (auth) -> auth
+//                        .requestMatchers( new AntPathRequestMatcher("/**") )
+//                        .permitAll())
+
+                .sessionManagement(sessionManagement ->
+                        sessionManagement.sessionCreationPolicy(
+                                SessionCreationPolicy.STATELESS // 세션에 저장하지 않겠다. 기본이 세션에 저장하는 것
+                        ))
+                .addFilterBefore(new JwtAuthenticationFilter(jwtConfig),
+                UsernamePasswordAuthenticationFilter.class);
+
 
         return http.build();
     }

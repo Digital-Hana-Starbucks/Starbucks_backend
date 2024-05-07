@@ -1,13 +1,17 @@
 package com.hanaro.starbucks.entity;
 
-import com.hanaro.starbucks.dto.user.MemberResDto;
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import org.springframework.cglib.core.Local;
 
 import java.time.LocalDate;
+import java.util.Date;
 
 @Entity
 @Getter
+@NoArgsConstructor
 @Table(name = "user")
 public class Member {
 
@@ -33,4 +37,14 @@ public class Member {
 
     @Column(name = "user_join_date")
     private LocalDate userJoinDate;
+
+    @Builder
+    public Member(String userId, String userPw, String userNickname) {
+        this.userId = userId;
+        this.userPw = userPw;
+        this.userNickname = userNickname;
+        this.userRole = "USER";
+        this.userPoint = 0;
+        this.userJoinDate = LocalDate.now();
+    }
 }

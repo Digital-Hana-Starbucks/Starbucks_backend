@@ -1,4 +1,4 @@
-package com.hanaro.starbucks.dto.user;
+package com.hanaro.starbucks.dto.member;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

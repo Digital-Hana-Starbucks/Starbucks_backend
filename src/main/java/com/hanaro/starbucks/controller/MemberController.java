@@ -1,10 +1,13 @@
 package com.hanaro.starbucks.controller;
 
 import com.hanaro.starbucks.config.JwtUtil;
-import com.hanaro.starbucks.dto.user.LoginReqDto;
-import com.hanaro.starbucks.dto.user.MemberResDto;
+import com.hanaro.starbucks.dto.member.LoginReqDto;
+import com.hanaro.starbucks.dto.member.MemberResDto;
+import com.hanaro.starbucks.dto.member.SignupReqDto;
 import com.hanaro.starbucks.service.MemberService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
@@ -22,11 +25,29 @@ public class MemberController {
         return userService.getUsers();
     }
 
-    @PostMapping("/login")
-    public String login(@RequestParam LoginReqDto user)  {
-        MemberResDto findUser = userService.findUser(user.getUserId(), user.getUserPw());
+    @PostMapping("/signup")
+    @ResponseBody
+    public ResponseEntity<?> signup(@RequestBody SignupReqDto user) {
+        System.out.println(user);
+        boolean findUser = userService.findUserByUserId(user.getUserId());
+        System.out.println(findUser);
+        if (!findUser) {
+            MemberResDto newUser = userService.createUser(user);
+            return ResponseEntity.ok(newUser.getUserId());
+        }
+        return ResponseEntity.status(HttpStatus.CONFLICT).body("이미 존재하는 사용자입니다.");
+    }
 
-        return jwtUtil.createToken(findUser.getUserId(), Arrays.asList(findUser.getUserRole()));
+    @PostMapping("/login")
+    @ResponseBody
+    public ResponseEntity<?> login(@RequestBody LoginReqDto user)  {
+        MemberResDto findUser = userService.findUserByUserIdAndUserPw(user.getUserId(), user.getUserPw());
+        if (findUser != null) {
+            String token = jwtUtil.createToken(findUser.getUserId(), Arrays.asList(findUser.getUserRole()));
+            return ResponseEntity.ok(token);
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인에 실패하였습니다. 아이디와 비밀번호를 확인해주세요.");
+        }
     }
 
 }
