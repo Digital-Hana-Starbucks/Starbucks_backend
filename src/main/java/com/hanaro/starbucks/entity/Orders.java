@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -23,7 +24,7 @@ public class Orders {
     private String orderStatus;
 
     @Column(name = "order_date")
-    private LocalDate orderDate;
+    private LocalDateTime orderDate;
 
     @ManyToOne
     @JoinColumn(name = "user_idx")
