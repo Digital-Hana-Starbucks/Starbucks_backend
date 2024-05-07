@@ -21,13 +21,16 @@ public class OrderService {
     private final OrderDetailRepository orderDetailRepository;
 
     public List<OrderResDto> getOrders() {
-        List<Orders> orders = orderRepository.findAll();
-        List<OrderResDto> orderResDtos = orders.stream()
+        List<Orders> orders = orderRepository.findAllByOrderByOrderIdxDesc();
+        return orders.stream()
                 .map(order -> {
                     List<OrderDetail> orderDetails = order.getOrderDetails();
                     int totalPrice = calculateTotalPrice(orderDetails);
+                    Integer userIdx = order.getUser() != null ? order.getUser().getUserIdx() : null;
+                    String userNickname = order.getUser()!=null? order.getUser().getUserNickname() : null ;
                     return OrderResDto.builder()
-                            .userIdx(order.getUser().getUserIdx())
+                            .userIdx(userIdx)
+                            .userNickname(userNickname)
                             .orderIdx(order.getOrderIdx())
                             .orderId(order.getOrderId())
                             .totalPrice(totalPrice)
@@ -36,13 +39,15 @@ public class OrderService {
                             .build();
                 })
                 .collect(Collectors.toList());
-        return orderResDtos;
     }
 
     public OrderResDto getOrder(int orderIdx) {
         Orders order = findOrderById(orderIdx);
+        Integer userIdx = order.getUser() != null ? order.getUser().getUserIdx() : null;
+        String userNickname = order.getUser()!=null? order.getUser().getUserNickname() : null ;
         return OrderResDto.builder()
-                .userIdx(order.getUser().getUserIdx())
+                .userIdx(userIdx)
+                .userNickname(userNickname)
                 .orderIdx(order.getOrderIdx())
                 .orderId(order.getOrderId())
                 .totalPrice(calculateTotalPrice(order.getOrderDetails()))
