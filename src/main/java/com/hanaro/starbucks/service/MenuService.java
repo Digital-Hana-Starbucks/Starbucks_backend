@@ -50,6 +50,7 @@ public class MenuService {
         if (optionalMenu.isEmpty()) {
             throw new Exception("존재하지 않는 메뉴입니다.");
         }
+        s3Uploader.deleteFile(optionalMenu.get().getMenuImage());
         menuRepository.deleteById(menuIdx);
     }
 
