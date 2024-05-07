@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -23,11 +24,11 @@ public class Orders {
     private String orderStatus;
 
     @Column(name = "order_date")
-    private LocalDate orderDate;
+    private LocalDateTime orderDate;
 
     @ManyToOne
-    @JoinColumn(name = "user_idx")
-    private User user;
+    @JoinColumn(name = "user_idx", nullable = true)
+    private Member user;
 
     @OneToMany(mappedBy = "orders", cascade = CascadeType.ALL)
     private List<OrderDetail> orderDetails;

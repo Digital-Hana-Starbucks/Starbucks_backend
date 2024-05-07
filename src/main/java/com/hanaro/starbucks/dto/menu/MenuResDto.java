@@ -22,7 +22,7 @@ public class MenuResDto {
 
     private LocalDate menuDate;
 
-    private int category_idx;
+    private int categoryIdx;
 
     public MenuResDto(Menu menu) {
         this.menuIdx = menu.getMenuIdx();
@@ -31,6 +31,6 @@ public class MenuResDto {
         this.menuPrice = menu.getMenuPrice();
         this.menuImage = menu.getMenuImage();
         this.menuDate = menu.getMenuDate();
-        this.category_idx = menu.getCategory().getCategoryIdx();
+        this.categoryIdx = menu.getCategory().getCategoryIdx();
     }
 }

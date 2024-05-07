@@ -12,10 +12,12 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
+import static com.hanaro.starbucks.util.APIConstant.API_VERSION;
+
 @RestController
-@RequestMapping("api/v1/products")
-@CrossOrigin(origins = "http://localhost:5173")
+@RequestMapping(API_VERSION + "/products")
 @RequiredArgsConstructor
+@CrossOrigin("http://localhost:5173")
 public class MenuController {
     private final MenuService menuService;
     private final CategoryService categoryService;
@@ -35,13 +37,13 @@ public class MenuController {
         return menuService.getMenuByMenuIdx(menuIdx);
     }
 
-    @DeleteMapping("/{menuIdx}")
+    @DeleteMapping("/admin/{menuIdx}")
     public void deleteMenuByMenuIdx(@PathVariable int menuIdx) throws Exception{
         menuService.deleteMenuByMenuIdx(menuIdx);
     }
 
-    @PutMapping(value = "/{menuIdx}", consumes = {MediaType.APPLICATION_JSON_VALUE, "multipart/form-data"})
-    public void updateMenu(@PathVariable int menuIdx, @RequestPart(value = "dto") MenuReqDto menuReqDto, @RequestPart(value = "menuImg") MultipartFile img) throws Exception{
+    @PutMapping(value = "/admin/{menuIdx}", consumes = {MediaType.APPLICATION_JSON_VALUE, "multipart/form-data"})
+    public void updateMenu(@PathVariable int menuIdx, @RequestPart(value = "dto") MenuReqDto menuReqDto, @RequestPart(value = "menuImg", required = false) MultipartFile img) throws Exception{
         menuService.updateMenu(menuIdx, menuReqDto, img);
     }
 
