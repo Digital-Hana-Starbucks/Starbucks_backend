@@ -49,6 +49,7 @@ public class MemberController {
     @ResponseBody
     public ResponseEntity<?> login(@RequestBody LoginReqDto user)  {
         MemberResDto findUser = memberService.findUserByUserIdAndUserPw(user.getUserId(), user.getUserPw());
+        System.out.println(findUser);
         if (findUser != null) {
             String token = jwtUtil.createToken(findUser.getUserId(), Arrays.asList(findUser.getUserRole()));
             Map<String, Object> response = new HashMap<>();

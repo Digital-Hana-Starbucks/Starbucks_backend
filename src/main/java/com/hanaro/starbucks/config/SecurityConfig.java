@@ -35,8 +35,9 @@ public class SecurityConfig {
                                 new AntPathRequestMatcher("/api/v1/users/signup")
                         ).permitAll() // 권한이 있든 말든 모두 접근 가능
                         // admin일 경우에만 /admin에 대한 요청에서 접근을 허용한다.
-                        .requestMatchers("/api/v1/user/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/api/v1/users/admin/**").hasRole("ADMIN")
                         .requestMatchers("/api/v1/products/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/api/v1/orders/admin/**").hasRole("ADMIN")
                         // 그 외 모든 요청은 인증된 사용자에게만 허용한다.
                         .anyRequest().permitAll()
                 )
