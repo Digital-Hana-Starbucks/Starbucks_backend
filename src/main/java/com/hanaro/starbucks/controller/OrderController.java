@@ -42,8 +42,10 @@ public class OrderController {
 
     @PostMapping("")
     public void createOrder(@RequestHeader MultiValueMap<String, String> headers, @RequestBody List<OrderReqDto> dtos) {
-        if(headers.containsKey("token") ){
-            orderService.createOrder(headers.getFirst("token"), dtos);
+        String originalToken = headers.getFirst("authorization");
+        if(headers.containsKey("authorization") ){
+            String token = originalToken.substring(7, originalToken.length());
+            orderService.createOrder(token, dtos);
         }else{
             orderService.createOrder("null", dtos);
         }

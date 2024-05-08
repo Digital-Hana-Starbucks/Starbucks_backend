@@ -56,7 +56,7 @@ public class JwtUtil {
 
     // http 요청에서 "TOKEN" 헤더 값을 읽어오는 메소드
     public String resolveToken(HttpServletRequest request) {
-        return request.getHeader("TOKEN");
+        return request.getHeader("Authorization");
     }
 
     public boolean validateToken(String token){

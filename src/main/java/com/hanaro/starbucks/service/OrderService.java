@@ -90,8 +90,9 @@ public class OrderService {
     public void createOrder(String token, List<OrderReqDto> dtos){
         Member member;
         Orders order;
+        int userIdx = -1;
+
         if(token.equals("null")){
-            System.out.println("~~~~~~~~~~~~~~~~~~``");
             order = Orders.builder()
                     .orderId(UUID.randomUUID().toString())
                     .orderStatus("주문완료")
@@ -100,14 +101,16 @@ public class OrderService {
             String userId = jwtUtil.getAuthentication(token).getName();
             System.out.println("User ID: " + userId);
             member = memberService.getUserById(userId);
+            userIdx = member.getUserIdx();
             order = Orders.builder()
                     .user(member)
                     .orderId(UUID.randomUUID().toString())
                     .orderStatus("주문완료")
                     .build();
+
         }
+
         Orders savedOrder = orderRepository.save(order);
-        System.out.println("~~~"+order.getOrderIdx());
 
         List<OrderDetail> orderDetails = dtos.stream()
                 .map(dto -> {
@@ -125,12 +128,11 @@ public class OrderService {
 
                 })
                 .collect(Collectors.toList());
-        System.out.println("~~~~~~~~"+orderDetails.size());
-        for(OrderDetail orderDetail : orderDetails){
-            System.out.println(orderDetail.getOrders());
-            System.out.println(orderDetail.getMenu());
-            System.out.println(orderDetail.getMenuTemperature());
-            System.out.println(orderDetail.getOrderDetailIdx());
+
+        if(userIdx != -1) {
+            int tot = calculateTotalPrice(orderDetails);
+            int point = (int) Math.floor(tot / 100.0);
+            memberService.updateUserPoint(userIdx, point);
         }
 
         orderDetailRepository.saveAll(orderDetails);

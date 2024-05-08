@@ -64,6 +64,10 @@ public class Member implements UserDetails {
         this.userJoinDate = LocalDate.now();
     }
 
+    public void update(int userPoint) {
+        this.userPoint = userPoint;
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         //계정의 권한 목록을 리턴함.
