@@ -1,9 +1,11 @@
 package com.hanaro.starbucks.controller;
 
 import com.hanaro.starbucks.dto.orders.OrderEditReqDto;
+import com.hanaro.starbucks.dto.orders.OrderReqDto;
 import com.hanaro.starbucks.dto.orders.OrderResDto;
 import com.hanaro.starbucks.service.OrderService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -34,6 +36,13 @@ public class OrderController {
     @DeleteMapping("/admin/{orderIdx}")
     public void deleteOrder(@PathVariable int orderIdx) {
         orderService.deleteOrder(orderIdx);
+    }
+
+    @PostMapping("")
+    public void createOrder(@RequestHeader MultiValueMap<String, String> headers, @RequestBody List<OrderReqDto> dtos) {
+//        System.out.println(headers);
+//        System.out.println(headers.get("token"));
+        orderService.createOrder(headers.getFirst("token"), dtos);
     }
 
 }
