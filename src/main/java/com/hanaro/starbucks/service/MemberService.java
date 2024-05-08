@@ -90,6 +90,16 @@ public class MemberService {
         memberRepository.save(member);
     }
 
+    public void updateUserPoint(int userIdx, int userPoint) {
+        Optional<Member> optional = memberRepository.findById(userIdx);
+        if(optional.isEmpty()){
+            throw new IllegalArgumentException("존재하지 않는 회원입니다.");
+        }
+        Member member = optional.get();
+        member.update(member.getUserPoint() + userPoint);
+        memberRepository.save(member);
+    }
+
     public void deleteUser(int userIdx){
         memberRepository.deleteById(userIdx);
     }

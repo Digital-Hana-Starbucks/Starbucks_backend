@@ -71,6 +71,7 @@ public class MemberController {
 
     @GetMapping("/points")
     public PointResDto getUserPoint(@RequestHeader MultiValueMap<String, String> headers){
-        return memberService.getUserPoint(headers.getFirst("token"));
+        String originalToken = headers.getFirst("authorization");
+        return memberService.getUserPoint(originalToken.substring(7, originalToken.length()));
     }
 }
