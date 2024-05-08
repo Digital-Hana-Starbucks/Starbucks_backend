@@ -1,6 +1,7 @@
 package com.hanaro.starbucks.dto.member;
 
 import com.hanaro.starbucks.entity.Member;
+import com.hanaro.starbucks.enumeration.UserRole;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -30,7 +31,7 @@ public class MemberResDto {
         this.userId = user.getUserId();
         this.userPw = user.getUserPw();
         this.userNickname = user.getUserNickname();
-        this.userRole = user.getUserRole();
+        this.userRole = String.valueOf(user.getUserRole());
         this.userPoint = user.getUserPoint();
         this.userJoinDate = user.getUserJoinDate();
     }
