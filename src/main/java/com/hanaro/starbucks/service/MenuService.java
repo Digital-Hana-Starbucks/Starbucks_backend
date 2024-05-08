@@ -43,6 +43,13 @@ public class MenuService {
         Menu menu = optionalMenu.get();
         return new MenuResDto(menu);
     }
+    public Menu findMenuByMenuIdx(int menuIdx) throws Exception{
+        Optional<Menu> optionalMenu = menuRepository.findById(menuIdx);
+        if(optionalMenu.isEmpty()) {
+            throw new Exception("존재하지 않는 메뉴입니다.");
+        }
+        return optionalMenu.get();
+    }
 
     public void deleteMenuByMenuIdx(int menuIdx) throws Exception {
         Optional<Menu> optionalMenu = menuRepository.findById(menuIdx);

@@ -1,12 +1,15 @@
 package com.hanaro.starbucks.entity;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
 
 @Entity
 @Getter
 @Table(name = "order_detail")
+@NoArgsConstructor
 public class OrderDetail {
 
     @Id
@@ -32,4 +35,12 @@ public class OrderDetail {
     @Column(name = "menu_size", nullable = false)
     private String menuSize;
 
+    @Builder
+    public OrderDetail(Orders orders, Menu menu, int orderDetailCount, String menuTemperature, String menuSize) {
+        this.orders = orders;
+        this.menu = menu;
+        this.orderDetailCount = orderDetailCount;
+        this.menuTemperature = menuTemperature;
+        this.menuSize = menuSize;
+    }
 }

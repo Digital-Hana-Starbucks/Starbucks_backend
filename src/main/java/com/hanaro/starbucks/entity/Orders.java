@@ -1,7 +1,9 @@
 package com.hanaro.starbucks.entity;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -10,6 +12,7 @@ import java.util.List;
 @Entity
 @Getter
 @Table(name = "orders")
+@NoArgsConstructor
 public class Orders {
 
     @Id
@@ -35,5 +38,13 @@ public class Orders {
 
     public void updateOrderStatus(String orderStatus){
         this.orderStatus=orderStatus;
+    }
+
+    @Builder
+    public Orders(String orderId, String orderStatus, Member user) {
+        this.orderId = orderId;
+        this.orderStatus = orderStatus;
+        this.orderDate = LocalDateTime.now();
+        this.user = user;
     }
 }

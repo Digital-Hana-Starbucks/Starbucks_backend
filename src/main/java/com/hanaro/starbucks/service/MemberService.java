@@ -37,13 +37,13 @@ public class MemberService {
         return new MemberResDto(optionalMember.get());
     }
 
-    public MemberResDto getUserById(String id){
+    public Member getUserById(String id){
 
         Optional<Member> optionalMember = memberRepository.findByUserId(id);
         if(optionalMember.isEmpty()){
             throw new IllegalArgumentException("존재하지 않는 회원입니다.");
         }
-        return new MemberResDto(optionalMember.get());
+        return optionalMember.get();
     }
 
     @Transactional

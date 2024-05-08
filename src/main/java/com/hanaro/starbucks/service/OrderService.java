@@ -1,9 +1,11 @@
 package com.hanaro.starbucks.service;
 
 import com.hanaro.starbucks.config.JwtUtil;
+import com.hanaro.starbucks.dto.member.MemberResDto;
 import com.hanaro.starbucks.dto.orders.OrderEditReqDto;
 import com.hanaro.starbucks.dto.orders.OrderReqDto;
 import com.hanaro.starbucks.dto.orders.OrderResDto;
+import com.hanaro.starbucks.entity.Member;
 import com.hanaro.starbucks.entity.OrderDetail;
 import com.hanaro.starbucks.entity.Orders;
 import com.hanaro.starbucks.repository.OrderDetailRepository;
@@ -15,9 +17,12 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -25,6 +30,8 @@ import java.util.stream.Collectors;
 public class OrderService {
     private final OrderRepository orderRepository;
     private final OrderDetailRepository orderDetailRepository;
+    private final MemberService memberService;
+    private final MenuService menuService;
     private final JwtUtil jwtUtil;
 
     @Value("${jwt.secretKey}")
@@ -81,11 +88,39 @@ public class OrderService {
         return optionalOrders.orElseThrow(() -> new IllegalArgumentException("주문 내역이 존재하지 않습니다."));
     }
 
+    @Transactional
     public void createOrder(String token, List<OrderReqDto> dtos){
 
         String userId = jwtUtil.getAuthentication(token).getName();
         System.out.println("User ID: " + userId);
+        Member member = memberService.getUserById(userId);
 
+        new Orders();
+        Orders order = Orders.builder()
+                .user(member)
+                .orderId(UUID.randomUUID().toString())
+                .orderStatus("주문완료")
+                .build();
+
+
+        List<OrderDetail> orderDetails = dtos.stream()
+                .map(dto -> {
+                    try {
+                        new OrderDetail();
+                        return OrderDetail.builder()
+                                .orders(order)
+                                .menu(menuService.findMenuByMenuIdx(dto.getMenuIdx()))
+                                .menuSize(dto.getMenuSize())
+                                .orderDetailCount(dto.getOrderDetailCount())
+                                .menuTemperature(dto.getMenuTemperature())
+                                .build();
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+
+                })
+                .collect(Collectors.toList());
+        orderDetailRepository.saveAll(orderDetails);
     }
     private int calculateTotalPrice(List<OrderDetail> orderDetails) {
         int totalPrice = 0;

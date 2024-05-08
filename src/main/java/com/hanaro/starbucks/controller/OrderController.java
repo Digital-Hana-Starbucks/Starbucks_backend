@@ -42,8 +42,6 @@ public class OrderController {
 
     @PostMapping("")
     public void createOrder(@RequestHeader MultiValueMap<String, String> headers, @RequestBody List<OrderReqDto> dtos) {
-//        System.out.println(headers);
-//        System.out.println(headers.get("token"));
         orderService.createOrder(headers.getFirst("token"), dtos);
     }
 
