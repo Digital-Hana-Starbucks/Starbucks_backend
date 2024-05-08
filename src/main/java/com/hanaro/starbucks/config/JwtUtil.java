@@ -54,9 +54,9 @@ public class JwtUtil {
         ); // 사용자 정보를 기반으로 토큰 생성
     }
 
-    // http 요청에서 "X-AUTH-TOKEN" 헤더 값을 읽어오는 메소드
+    // http 요청에서 "TOKEN" 헤더 값을 읽어오는 메소드
     public String resolveToken(HttpServletRequest request) {
-        return request.getHeader("X-AUTH-TOKEN");
+        return request.getHeader("TOKEN");
     }
 
     public boolean validateToken(String token){
