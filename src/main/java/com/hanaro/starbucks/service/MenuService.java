@@ -88,8 +88,15 @@ public class MenuService {
 
         Random random = new Random();
 
-        while (idxSet.size() < 9) {
+        while (idxSet.size() < 8) {
             int idx = random.nextInt(menus.size());
+
+            Menu menu = menus.get(idx);
+
+            if(idxSet.contains(idx)) continue;
+
+            if(menu.getCategory().getCategoryIdx() == 4 || menu.getCategory().getCategoryIdx() == 5) continue;
+
             idxSet.add(idx);
             menuList.add(menus.get(idx));
         }
