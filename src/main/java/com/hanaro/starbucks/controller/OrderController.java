@@ -42,7 +42,13 @@ public class OrderController {
 
     @PostMapping("")
     public void createOrder(@RequestHeader MultiValueMap<String, String> headers, @RequestBody List<OrderReqDto> dtos) {
-        orderService.createOrder(headers.getFirst("token"), dtos);
+        if(headers.containsKey("token") ){
+            orderService.createOrder(headers.getFirst("token"), dtos);
+        }else{
+            orderService.createOrder("null", dtos);
+        }
+
+
     }
 
 }

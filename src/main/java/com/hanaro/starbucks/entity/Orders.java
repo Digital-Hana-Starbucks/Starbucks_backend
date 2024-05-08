@@ -47,4 +47,11 @@ public class Orders {
         this.orderDate = LocalDateTime.now();
         this.user = user;
     }
+
+    @Builder
+    public Orders(String orderId, String orderStatus) {
+        this.orderId = orderId;
+        this.orderStatus = orderStatus;
+        this.orderDate = LocalDateTime.now();
+    }
 }

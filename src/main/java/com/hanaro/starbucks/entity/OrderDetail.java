@@ -29,10 +29,10 @@ public class OrderDetail {
     @Column(name = "order_detail_count")
     private int orderDetailCount;
 
-    @Column(name = "menu_temperature", nullable = false)
+    @Column(name = "menu_temperature")
     private String menuTemperature;
 
-    @Column(name = "menu_size", nullable = false)
+    @Column(name = "menu_size")
     private String menuSize;
 
     @Builder

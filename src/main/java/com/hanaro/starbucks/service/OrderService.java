@@ -88,25 +88,32 @@ public class OrderService {
 
     @Transactional
     public void createOrder(String token, List<OrderReqDto> dtos){
-
-        String userId = jwtUtil.getAuthentication(token).getName();
-        System.out.println("User ID: " + userId);
-        Member member = memberService.getUserById(userId);
-
-        new Orders();
-        Orders order = Orders.builder()
-                .user(member)
-                .orderId(UUID.randomUUID().toString())
-                .orderStatus("주문완료")
-                .build();
-
+        Member member;
+        Orders order;
+        if(token.equals("null")){
+            System.out.println("~~~~~~~~~~~~~~~~~~``");
+            order = Orders.builder()
+                    .orderId(UUID.randomUUID().toString())
+                    .orderStatus("주문완료")
+                    .build();
+        }else{
+            String userId = jwtUtil.getAuthentication(token).getName();
+            System.out.println("User ID: " + userId);
+            member = memberService.getUserById(userId);
+            order = Orders.builder()
+                    .user(member)
+                    .orderId(UUID.randomUUID().toString())
+                    .orderStatus("주문완료")
+                    .build();
+        }
+        Orders savedOrder = orderRepository.save(order);
+        System.out.println("~~~"+order.getOrderIdx());
 
         List<OrderDetail> orderDetails = dtos.stream()
                 .map(dto -> {
                     try {
-                        new OrderDetail();
                         return OrderDetail.builder()
-                                .orders(order)
+                                .orders(savedOrder)
                                 .menu(menuService.findMenuByMenuIdx(dto.getMenuIdx()))
                                 .menuSize(dto.getMenuSize())
                                 .orderDetailCount(dto.getOrderDetailCount())
@@ -118,6 +125,14 @@ public class OrderService {
 
                 })
                 .collect(Collectors.toList());
+        System.out.println("~~~~~~~~"+orderDetails.size());
+        for(OrderDetail orderDetail : orderDetails){
+            System.out.println(orderDetail.getOrders());
+            System.out.println(orderDetail.getMenu());
+            System.out.println(orderDetail.getMenuTemperature());
+            System.out.println(orderDetail.getOrderDetailIdx());
+        }
+
         orderDetailRepository.saveAll(orderDetails);
     }
     private int calculateTotalPrice(List<OrderDetail> orderDetails) {
