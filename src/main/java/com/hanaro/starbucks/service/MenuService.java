@@ -69,7 +69,7 @@ public class MenuService {
         if(img==null || img.isEmpty()) url=menu.getMenuImage();
         else url = s3Uploader.updateFile(img, menu.getMenuImage(), optionalCategory.get().getCategoryName());
 
-        menu.update(menuReqDto, url);
+        menu.update(menuReqDto, optionalCategory.get(), url);
         menuRepository.save(menu);
     }
 
