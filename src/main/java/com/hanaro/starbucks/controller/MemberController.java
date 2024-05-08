@@ -6,6 +6,7 @@ import com.hanaro.starbucks.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
@@ -68,8 +69,8 @@ public class MemberController {
         memberService.deleteUser(userIdx);
     }
 
-    @GetMapping("/{userIdx}/points")
-    public PointResDto getUserPoint(@PathVariable int userIdx){
-        return memberService.getUserPoint(userIdx);
+    @GetMapping("/points")
+    public PointResDto getUserPoint(@RequestHeader MultiValueMap<String, String> headers){
+        return memberService.getUserPoint(headers.getFirst("token"));
     }
 }

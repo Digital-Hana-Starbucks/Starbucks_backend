@@ -1,5 +1,6 @@
 package com.hanaro.starbucks.service;
 
+import com.hanaro.starbucks.config.JwtUtil;
 import com.hanaro.starbucks.dto.member.MemberResDto;
 import com.hanaro.starbucks.dto.member.PointResDto;
 import com.hanaro.starbucks.dto.member.SignupReqDto;
@@ -21,6 +22,7 @@ import java.util.stream.Collectors;
 public class MemberService {
     private final MemberRepository memberRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final JwtUtil jwtUtil;
 
     @Transactional
     public List<MemberResDto> getUsers(){
@@ -91,8 +93,10 @@ public class MemberService {
     public void deleteUser(int userIdx){
         memberRepository.deleteById(userIdx);
     }
-    public PointResDto getUserPoint(int userIdx){
-        PointResDto dto = memberRepository.findPointByUserIdx(userIdx);
+    public PointResDto getUserPoint(String token){
+        String userId = jwtUtil.getAuthentication(token).getName();
+
+        PointResDto dto = memberRepository.findPointByUserIdx(getUserById(userId).getUserIdx());
         if(dto==null){
             throw new IllegalArgumentException("존재하지 않는 회원입니다.");
         }

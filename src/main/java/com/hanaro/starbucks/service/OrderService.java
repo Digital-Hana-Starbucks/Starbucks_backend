@@ -34,8 +34,6 @@ public class OrderService {
     private final MenuService menuService;
     private final JwtUtil jwtUtil;
 
-    @Value("${jwt.secretKey}")
-    private String secretKey;
     public List<OrderResDto> getOrders() {
         List<Orders> orders = orderRepository.findAllByOrderByOrderIdxDesc();
         return orders.stream()
