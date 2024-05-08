@@ -1,6 +1,7 @@
 package com.hanaro.starbucks.service;
 
 import com.hanaro.starbucks.dto.member.MemberResDto;
+import com.hanaro.starbucks.dto.member.PointResDto;
 import com.hanaro.starbucks.dto.member.SignupReqDto;
 import com.hanaro.starbucks.dto.member.MemberUpdateReqDto;
 import com.hanaro.starbucks.entity.Member;
@@ -89,5 +90,12 @@ public class MemberService {
 
     public void deleteUser(int userIdx){
         memberRepository.deleteById(userIdx);
+    }
+    public PointResDto getUserPoint(int userIdx){
+        PointResDto dto = memberRepository.findPointByUserIdx(userIdx);
+        if(dto==null){
+            throw new IllegalArgumentException("존재하지 않는 회원입니다.");
+        }
+        return dto;
     }
 }
