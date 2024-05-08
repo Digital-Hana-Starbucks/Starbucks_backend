@@ -1,10 +1,7 @@
 package com.hanaro.starbucks.controller;
 
 import com.hanaro.starbucks.config.JwtUtil;
-import com.hanaro.starbucks.dto.member.LoginReqDto;
-import com.hanaro.starbucks.dto.member.MemberResDto;
-import com.hanaro.starbucks.dto.member.SignupReqDto;
-import com.hanaro.starbucks.dto.member.MemberUpdateReqDto;
+import com.hanaro.starbucks.dto.member.*;
 import com.hanaro.starbucks.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -71,4 +68,8 @@ public class MemberController {
         memberService.deleteUser(userIdx);
     }
 
+    @GetMapping("/{userIdx}/points")
+    public PointResDto getUserPoint(@PathVariable int userIdx){
+        return memberService.getUserPoint(userIdx);
+    }
 }

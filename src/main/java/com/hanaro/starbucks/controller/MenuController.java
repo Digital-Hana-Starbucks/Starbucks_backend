@@ -1,9 +1,12 @@
 package com.hanaro.starbucks.controller;
 
+import com.hanaro.starbucks.dto.category.CategoryResDto;
 import com.hanaro.starbucks.dto.menu.MenuReqDto;
 import com.hanaro.starbucks.dto.menu.MenuResDto;
+import com.hanaro.starbucks.service.CategoryService;
 import com.hanaro.starbucks.service.MenuService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -13,11 +16,13 @@ import java.util.List;
 import static com.hanaro.starbucks.util.APIConstant.API_VERSION;
 
 @RestController
+@Slf4j
 @RequestMapping(API_VERSION + "/products")
 @RequiredArgsConstructor
 @CrossOrigin("http://localhost:5173")
 public class MenuController {
     private final MenuService menuService;
+    private final CategoryService categoryService;
 
     @GetMapping("")
     public List<MenuResDto> getMenuList() {
@@ -41,6 +46,15 @@ public class MenuController {
 
     @PutMapping(value = "/admin/{menuIdx}", consumes = {MediaType.APPLICATION_JSON_VALUE, "multipart/form-data"})
     public void updateMenu(@PathVariable int menuIdx, @RequestPart(value = "dto") MenuReqDto menuReqDto, @RequestPart(value = "menuImg", required = false) MultipartFile img) throws Exception{
+        log.info("~~~~~~menuReqDto = {}", menuReqDto.getCategoryIdx());
         menuService.updateMenu(menuIdx, menuReqDto, img);
     }
+
+    @GetMapping("/category")
+    public List<CategoryResDto> getCategoryList() {
+        return categoryService.getCategoryList();
+    }
+
+    @GetMapping("/recommendations")
+    public List<MenuResDto> getRecommendationList() { return menuService.getRecommendationList(); }
 }

@@ -12,8 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -50,6 +49,7 @@ public class MenuService {
         if (optionalMenu.isEmpty()) {
             throw new Exception("존재하지 않는 메뉴입니다.");
         }
+        s3Uploader.deleteFile(optionalMenu.get().getMenuImage());
         menuRepository.deleteById(menuIdx);
     }
 
@@ -69,7 +69,23 @@ public class MenuService {
         if(img==null || img.isEmpty()) url=menu.getMenuImage();
         else url = s3Uploader.updateFile(img, menu.getMenuImage(), optionalCategory.get().getCategoryName());
 
-        menu.update(menuReqDto, url);
+        menu.update(menuReqDto, optionalCategory.get(), url);
         menuRepository.save(menu);
+    }
+
+    public List<MenuResDto> getRecommendationList(){
+        List<Menu> menus = menuRepository.findAll();
+
+        Set<Integer> idxSet = new HashSet<>(9);
+        List<Menu> menuList = new ArrayList<>(9);
+
+        Random random = new Random();
+
+        while (idxSet.size() < 9) {
+            int idx = random.nextInt(menus.size());
+            idxSet.add(idx);
+            menuList.add(menus.get(idx));
+        }
+        return menuList.stream().map(MenuResDto::new).collect(Collectors.toList());
     }
 }

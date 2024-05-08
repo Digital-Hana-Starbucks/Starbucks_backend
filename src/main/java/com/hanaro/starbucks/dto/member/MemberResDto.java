@@ -27,6 +27,7 @@ public class MemberResDto {
 
     @Builder
     public MemberResDto(Member user){
+        this.userIdx = user.getUserIdx();
         this.userId = user.getUserId();
         this.userPw = user.getUserPw();
         this.userNickname = user.getUserNickname();

@@ -27,7 +27,7 @@ public class Orders {
     private LocalDateTime orderDate;
 
     @ManyToOne
-    @JoinColumn(name = "user_idx")
+    @JoinColumn(name = "user_idx", nullable = true)
     private Member user;
 
     @OneToMany(mappedBy = "orders", cascade = CascadeType.ALL)

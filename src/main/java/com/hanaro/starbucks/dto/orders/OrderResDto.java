@@ -11,7 +11,8 @@ import java.time.LocalDateTime;
 @Builder
 @Getter
 public class OrderResDto {
-    private int userIdx;
+    private Integer userIdx;
+    private String userNickname;
     private int orderIdx;
     private String orderId;
     private Integer totalPrice;
