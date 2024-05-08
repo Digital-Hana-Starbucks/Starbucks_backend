@@ -36,10 +36,11 @@ public class Menu {
     private Category category;
 
 
-    public void update(MenuReqDto dto, String img) {
+    public void update(MenuReqDto dto, Category category, String img) {
         this.menuName = dto.getMenuName();
         this.menuPrice = dto.getMenuPrice();
         this.menuImage = img;
+        this.category = category;
         this.menuDate = LocalDate.now();
     }
 
