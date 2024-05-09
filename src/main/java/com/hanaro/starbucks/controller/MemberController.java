@@ -19,6 +19,7 @@ import static com.hanaro.starbucks.util.APIConstant.API_VERSION;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(API_VERSION + "/users")
+@CrossOrigin("http://localhost:5173")
 public class MemberController {
     private final MemberService memberService;
     private final JwtUtil jwtUtil;
