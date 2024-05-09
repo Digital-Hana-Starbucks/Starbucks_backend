@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class MenuService {
     private final MenuRepository menuRepository;
-    private final CategoryRepository categoryRepository;
+    private final CategoryRepository categoryRepository;dd
     private final S3Uploader s3Uploader;
 
     public List<MenuResDto> getMenuList() {
@@ -56,8 +56,8 @@ public class MenuService {
         if (optionalMenu.isEmpty()) {
             throw new Exception("존재하지 않는 메뉴입니다.");
         }
-        s3Uploader.deleteFile(optionalMenu.get().getMenuImage());
         menuRepository.deleteById(menuIdx);
+        s3Uploader.deleteFile(optionalMenu.get().getMenuImage());
     }
 
     @Transactional
