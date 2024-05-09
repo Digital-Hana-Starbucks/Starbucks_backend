@@ -141,10 +141,12 @@ public class OrderService {
         int totalPrice = 0;
         for (OrderDetail orderDetail : orderDetails) {
             int menuPrice = orderDetail.getMenu().getMenuPrice();
-            if (orderDetail.getMenuSize().equals(Constant.GRANDE_SIZE)) {
-                menuPrice += Constant.GRANDE;
-            } else if (orderDetail.getMenuSize().equals(Constant.VENTI_SIZE)) {
-                menuPrice += Constant.VENTI;
+            if(orderDetail.getMenuTemperature()!=null){
+                if (orderDetail.getMenuSize().equals(Constant.GRANDE_SIZE)) {
+                    menuPrice += Constant.GRANDE;
+                } else if (orderDetail.getMenuSize().equals(Constant.VENTI_SIZE)) {
+                    menuPrice += Constant.VENTI;
+                }
             }
             totalPrice += menuPrice * orderDetail.getOrderDetailCount();
         }
