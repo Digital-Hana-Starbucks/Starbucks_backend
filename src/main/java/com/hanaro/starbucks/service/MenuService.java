@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class MenuService {
     private final MenuRepository menuRepository;
-    private final CategoryRepository categoryRepository;dd
+    private final CategoryRepository categoryRepository;
     private final S3Uploader s3Uploader;
 
     public List<MenuResDto> getMenuList() {
