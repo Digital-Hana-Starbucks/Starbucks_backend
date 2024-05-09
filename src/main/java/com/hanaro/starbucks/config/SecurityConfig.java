@@ -29,11 +29,6 @@ public class SecurityConfig {
                 .cors((cors) -> cors.configurationSource(corsConfigurationSource()))
 
                 .authorizeHttpRequests((auth) -> auth
-                        // 로그인과 회원가입은 모든 사용자에게 허용한다.
-                        .requestMatchers(
-                                new AntPathRequestMatcher("/api/v1/users/login"),
-                                new AntPathRequestMatcher("/api/v1/users/signup")
-                        ).permitAll() // 권한이 있든 말든 모두 접근 가능
                         // admin일 경우에만 /admin에 대한 요청에서 접근을 허용한다.
                         .requestMatchers("/api/v1/users/admin/**").hasRole("ADMIN")
                         .requestMatchers("/api/v1/products/admin/**").hasRole("ADMIN")

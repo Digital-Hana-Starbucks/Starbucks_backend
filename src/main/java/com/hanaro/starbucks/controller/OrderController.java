@@ -20,7 +20,7 @@ import static com.hanaro.starbucks.util.APIConstant.API_VERSION;
 public class OrderController {
     private final OrderService orderService;
 
-    @GetMapping("")
+    @GetMapping("/admin")
     public List<OrderResDto> getOrders() {
         return orderService.getOrders();
     }
