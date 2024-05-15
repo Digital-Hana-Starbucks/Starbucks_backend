@@ -8,6 +8,7 @@
   <img src="https://img.shields.io/badge/JPA-6DB33F" />
   <img src="https://img.shields.io/badge/MySQL-4479A1" />
   <img src="https://img.shields.io/badge/Gradle-02303A" />
+  <img src="https://img.shields.io/badge/Amazon AWS-232F3E" />
 
 </p>
 
