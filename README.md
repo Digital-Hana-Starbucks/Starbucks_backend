@@ -12,7 +12,7 @@
 
 </p>
 
-## 👫 팀 소개
+## 👫 Member
 
 | 이름       | 역할   |
 | ---------- | ------ |
@@ -21,3 +21,7 @@
 | 정건우 | 메인페이지 |
 
 <br/>
+
+## 🚩 Project
+#### ERD
+<img width="911" alt="image" src="https://github.com/Digital-Hana-Starbucks/Starbucks_backend/assets/31836035/ab4cc485-d80f-433b-913b-5b4cd6344bbe">
